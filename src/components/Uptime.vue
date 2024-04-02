@@ -31,6 +31,8 @@ export default {
             }
 
             let key = this.monitor.id + "_" + this.type;
+            console.log(key);
+            console.log(this.$root);
 
             if (this.$root.uptimeList[key] !== undefined) {
                 let result = Math.round(this.$root.uptimeList[key] * 10000) / 100;
