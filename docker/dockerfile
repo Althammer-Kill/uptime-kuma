@@ -61,13 +61,17 @@ FROM louislam/uptime-kuma:builder-go AS build_healthcheck
 # Build in Node.js
 ############################################
 FROM base2 AS build
-USER node
 WORKDIR /app
+
+RUN chown node:node .
+USER node
 
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1
 COPY --chown=node:node .npmrc .npmrc
 COPY --chown=node:node package.json package.json
 COPY --chown=node:node package-lock.json package-lock.json
+RUN pwd
+RUN ls -al
 RUN npm ci --omit=dev
 COPY . .
 COPY --chown=node:node --from=build_healthcheck /app/extra/healthcheck /app/extra/healthcheck
